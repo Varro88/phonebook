@@ -1,7 +1,7 @@
 package com.griddnamics.gridu.spring.qa.phonebook.controller;
 
 import com.griddnamics.gridu.spring.qa.phonebook.entity.PhoneBookRecord;
-import com.griddnamics.gridu.spring.qa.phonebook.service.PhoneBookService;
+import com.griddnamics.gridu.spring.qa.phonebook.service.PhoneBookServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/contacts")
 public class PhoneBookController {
-    private final PhoneBookService service;
+    private final PhoneBookServiceImpl service;
 
-    public PhoneBookController(PhoneBookService service) {
+    public PhoneBookController(PhoneBookServiceImpl service) {
         this.service = service;
     }
 
