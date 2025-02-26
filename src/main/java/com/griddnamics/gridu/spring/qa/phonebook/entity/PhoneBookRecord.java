@@ -14,6 +14,4 @@ public class PhoneBookRecord {
     @Column(unique = true)
     private String name;
     private String phoneNumber;
-
-    // Getters and Setters
 }

@@ -4,7 +4,6 @@ import com.griddnamics.gridu.spring.qa.phonebook.entity.PhoneBookRecord;
 import com.griddnamics.gridu.spring.qa.phonebook.service.PhoneBookServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,14 +34,13 @@ public class PhoneBookController {
     }
 
     @PostMapping
-    public ResponseEntity<PhoneBookRecord> createRecord(@RequestBody PhoneBookRecord record) {
-        PhoneBookRecord saved = service.createRecord(record.getName(), record.getPhoneNumber());
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    public PhoneBookRecord createRecord(@RequestBody PhoneBookRecord record) {
+        return service.createRecord(record.getName(), record.getPhoneNumber());
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<String> deleteByName(@PathVariable String name) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByName(@PathVariable String name) {
         service.deleteByName(name);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
     }
 }

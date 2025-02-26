@@ -1,9 +1,9 @@
 package com.griddnamics.gridu.spring.qa.phonebook.service;
 
+import com.griddnamics.gridu.spring.qa.phonebook.controller.exception.InvalidRecordException;
+import com.griddnamics.gridu.spring.qa.phonebook.controller.exception.NoRecordWithProvidedNameException;
+import com.griddnamics.gridu.spring.qa.phonebook.controller.exception.RecordAlreadyExistsException;
 import com.griddnamics.gridu.spring.qa.phonebook.entity.PhoneBookRecord;
-import com.griddnamics.gridu.spring.qa.phonebook.exceptions.InvalidRecordException;
-import com.griddnamics.gridu.spring.qa.phonebook.exceptions.NoRecordWithProvidedNameException;
-import com.griddnamics.gridu.spring.qa.phonebook.exceptions.RecordAlreadyExistsException;
 import com.griddnamics.gridu.spring.qa.phonebook.repository.PhoneBookRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
