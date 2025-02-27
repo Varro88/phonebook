@@ -34,6 +34,7 @@ public class PhoneBookController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PhoneBookRecord createRecord(@RequestBody PhoneBookRecord record) {
         return service.createRecord(record.getName(), record.getPhoneNumber());
     }

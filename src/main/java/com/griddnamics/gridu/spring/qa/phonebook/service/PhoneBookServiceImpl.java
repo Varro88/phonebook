@@ -6,12 +6,14 @@ import com.griddnamics.gridu.spring.qa.phonebook.controller.exception.RecordAlre
 import com.griddnamics.gridu.spring.qa.phonebook.entity.PhoneBookRecord;
 import com.griddnamics.gridu.spring.qa.phonebook.repository.PhoneBookRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PhoneBookServiceImpl implements PhoneBookService {
     
@@ -26,6 +28,7 @@ public class PhoneBookServiceImpl implements PhoneBookService {
     }
 
     public List<PhoneBookRecord> getPhonesByName(String name) {
+        log.info("Searching for phone records by name '{}'", name);
         List<PhoneBookRecord> foundRecords = repository.findByName(name);
         if (foundRecords.isEmpty()) {
             throw new NoRecordWithProvidedNameException("Name '" + name + "' not found");
@@ -39,6 +42,10 @@ public class PhoneBookServiceImpl implements PhoneBookService {
         if (existingRecord.isEmpty()) {
             throw new NoRecordWithProvidedNameException("Name '" + name + "' not found");
         }
+        if(phoneNumber == null || phoneNumber.isEmpty()) {
+            throw new InvalidRecordException("Phone number is required");
+        }
+        log.info("Adding phone '{}' to name '{}': ", phoneNumber, name);
         PhoneBookRecord record = existingRecord.get();
         record.setPhoneNumber(phoneNumber);
         return repository.save(record);
@@ -52,6 +59,7 @@ public class PhoneBookServiceImpl implements PhoneBookService {
         if(name == null || name.isEmpty()) {
             throw new InvalidRecordException("Name is required");
         }
+        log.info("Creating phone book with name '{}' and phone number '{}'", name, phoneNumber);
         PhoneBookRecord record = new PhoneBookRecord();
         record.setName(name);
         record.setPhoneNumber(phoneNumber);
@@ -64,6 +72,7 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 
     @Transactional
     public void deleteByName(String name) {
+        log.info("Deleting phone book with name '{}'", name);
         int rowsDeleted = repository.deleteByName(name);
         if (rowsDeleted == 0) {
             throw new NoRecordWithProvidedNameException("Name '" + name + "' not found");
